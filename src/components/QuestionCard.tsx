@@ -52,6 +52,7 @@ export default function QuestionCard(
               key={answer}
               value={answer}
               onClick={callback}
+              disabled={scored}
             >
               <span dangerouslySetInnerHTML={{ __html: answer }} />
             </button>

@@ -26,6 +26,7 @@ export default function App() {
 
 
   async function startTrivia() {
+    setScored(false)
     setLoading(true)
     setGameOver(false)
 
@@ -57,80 +58,53 @@ export default function App() {
     setUserAnswers(modifiedAnswers)
   }
 
-  // function checkAnswer(e: React.MouseEvent<HTMLButtonElement>) {
-  //   if (!gameOver) {
-  //     // get user's answer
-  //     const answer = e.currentTarget.value
-  //     // check answer against correct answer
-  //     const correct = questions[number].correct_answer === answer
-  //     // add score if answer is correct
-  //     if (correct) setScore(prev => prev + 1)
-  //     // save answer in the array for the user's answers
-  //     const answerObject = {
-  //       question: questions[number].question,
-  //       answer,
-  //       correct,
-  //       correctAnswer: questions[number].correct_answer
-  //     }
-  //     setUserAnswers(prev => [...prev, answerObject])
-  //   }
-
-  // }
-
-  // function nextQuestion() {
-  //   // move onto the next question if it is not the last question
-  //   const nextQuestion = number + 1
-
-  //   if (nextQuestion === TOTAL_QUESTIONS) setGameOver(true)
-  //   else setNumber(nextQuestion)
-  // }
-
   return (
-    <div>
-      <h1 className="text-5xl text-slate-800 font-semibold tracking-wider">Quizzical</h1>
+    <div className="min-h-screen flex flex-col justify-center">
+      <div className="mx-auto max-w-screen-md ">
 
-      {(gameOver || userAnswers.length === TOTAL_QUESTIONS) &&
-        <button onClick={startTrivia}>Start</button>
-      }
+        {gameOver &&
+          <div className="text-center">
+            <h1 className="text-[2.75rem] text-slate-800 font-semibold tracking-wider">Quizzical</h1>
+            <p className="text-xl">Scramble your brain on trivia</p>
+            <button
+              className="mt-10 text-xl bg-[#4D5B9E] text-white font-medium py-5 px-[4.5rem] rounded-3xl"
+              onClick={startTrivia}>Start quiz</button>
+          </div>
+        }
 
-      {/* {<pre>{JSON.stringify(userAnswers, null, 2)}</pre>} */}
+        {loading && <p>Loading Questions...</p>}
 
-      {!gameOver && <p>Score: {score}</p>}
+        {!loading && !gameOver &&
+          questions.map(({ question, answers }, i) => (
+            <QuestionCard
+              key={question}
+              questionNum={i}
+              question={question}
+              answers={answers}
+              userAnswer={userAnswers ? userAnswers[i] : undefined}
+              callback={(e) => checkAnswer(e, i)}
+              scored={scored}
+            />))
+        }
 
-      {!loading && !gameOver && <button onClick={() => setScored(true)}>Check Answers</button>}
+        {!loading && !gameOver && !scored &&
+          <div className="w-full flex justify-center">
+            <button
+              className="mt-10 text-lg bg-[#4D5B9E] text-white font-medium py-4 px-10 rounded-3xl"
+              onClick={() => setScored(true)}>Check Answers</button>
+          </div>}
 
-      {loading && <p>Loading Questions...</p>}
+        {scored && !gameOver &&
+          <div className="mt-10 w-full flex justify-center items-center space-x-6">
+            <p className="text-xl font-semibold">You scored {score}/{TOTAL_QUESTIONS} correct answers</p>
+            <button
+              className="text-lg bg-[#4D5B9E] text-white font-medium py-4 px-10 rounded-3xl"
+              onClick={startTrivia}>Play Again</button>
+          </div>}
 
-      {!loading && !gameOver &&
-        questions.map(({ question, answers }, i) => (
-          <QuestionCard
-            key={question}
-            questionNum={i}
-            question={question}
-            answers={answers}
-            userAnswer={userAnswers ? userAnswers[i] : undefined}
-            callback={(e) => checkAnswer(e, i)}
-            scored={scored}
-          />))
-      }
+      </div>
 
-      {/* {!loading && !gameOver && */}
-      {/*   <QuestionCard */}
-      {/*     questionNum={number + 1} */}
-      {/*     totalQuestions={TOTAL_QUESTIONS} */}
-      {/*     question={questions[number].question} */}
-      {/*     answers={questions[number].answers} */}
-      {/*     userAnswer={userAnswers ? userAnswers[number] : undefined} */}
-      {/*     callback={checkAnswer} */}
-      {/*   /> */}
-      {/* } */}
 
-      {/* {!gameOver && */}
-      {/*   !loading && */}
-      {/*   userAnswers.length === number + 1 && */}
-      {/*   number !== TOTAL_QUESTIONS - 1 && */}
-      {/*   <button className="mt-6" onClick={nextQuestion}>Next Question</button> */}
-      {/* } */}
     </div>
   )
 }
