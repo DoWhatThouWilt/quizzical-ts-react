@@ -18,12 +18,10 @@ const TOTAL_QUESTIONS = 5
 export default function App() {
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState<QuestionState[]>([])
+  const [score, setScore] = useState(0)
   const [scored, setScored] = useState(false)
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
   const [gameOver, setGameOver] = useState(true)
-
-  const score = userAnswers.filter(answer => answer.correct === true).length
-
 
   async function startTrivia() {
     setScored(false)
@@ -56,6 +54,12 @@ export default function App() {
 
     modifiedAnswers[i] = answerObject
     setUserAnswers(modifiedAnswers)
+  }
+
+  function scoreQuiz() {
+    setScored(true)
+    const scoreCalc = userAnswers.filter(answer => answer.correct === true).length
+    setScore(scoreCalc)
   }
 
   return (
@@ -91,7 +95,7 @@ export default function App() {
           <div className="w-full flex justify-center">
             <button
               className="mt-10 text-lg bg-[#4D5B9E] text-white font-medium py-4 px-10 rounded-3xl"
-              onClick={() => setScored(true)}>Check Answers</button>
+              onClick={scoreQuiz}>Check Answers</button>
           </div>}
 
         {scored && !gameOver &&
