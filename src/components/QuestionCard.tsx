@@ -5,8 +5,8 @@ type Props = {
   answers: string[];
   callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
   userAnswer: AnswerObject | undefined;
-  questionNum: number;
   scored: boolean;
+  correctAnswer: string;
 }
 
 export default function QuestionCard(
@@ -15,21 +15,17 @@ export default function QuestionCard(
     answers,
     callback,
     userAnswer,
-    questionNum,
-    scored
+    scored,
+    correctAnswer
   }: Props
 ) {
-  const selected = "border-[#F5F7FB] bg-violet-200"
-  const incorrect = "border-[#F5F7FB] bg-red-200 text-slate-500"
-  const correct = "border-[#F5F7FB] bg-green-300"
-  const scoredSelected = "border-slate-500 text-slate-500"
+  const selected = "bg-violet-200 border-transparent"
+  const incorrect = "bg-red-200 text-slate-500 border-transparent"
+  const correct = "bg-green-300 border-transparent"
+  const scoredSelected = "text-slate-500 border-slate-300"
 
   function isSelected(selectedAnswer: string) {
     return userAnswer?.answer === selectedAnswer
-  }
-
-  function isCorrect(selectedAnswer: string) {
-    return isSelected(selectedAnswer) && userAnswer?.correct
   }
 
   return (
@@ -45,7 +41,7 @@ export default function QuestionCard(
                 `border border-indigo-900 rounded-lg py-1 px-5 text-sm
                 hover:scale-105 transition-all ease-in duration-100
                 ${!scored && isSelected(answer) && selected}
-                ${scored && (isCorrect(answer) ? correct :
+                ${scored && (answer === correctAnswer ? correct :
                   isSelected(answer) ? incorrect :
                     scoredSelected)}
                 `

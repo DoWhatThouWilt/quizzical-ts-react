@@ -10,7 +10,6 @@ export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
-  correctAnswer: string;
 }
 
 const TOTAL_QUESTIONS = 5
@@ -49,7 +48,6 @@ export default function App() {
       question: questions[i].question,
       answer,
       correct,
-      correctAnswer: questions[i].correct_answer
     }
 
     modifiedAnswers[i] = answerObject
@@ -80,15 +78,15 @@ export default function App() {
         {loading && <p className="text-white">Loading Questions...</p>}
 
         {!loading && !gameOver &&
-          questions.map(({ question, answers }, i) => (
+          questions.map(({ question, answers, correct_answer }, i) => (
             <QuestionCard
               key={question}
-              questionNum={i}
               question={question}
               answers={answers}
               userAnswer={userAnswers ? userAnswers[i] : undefined}
               callback={(e) => checkAnswer(e, i)}
               scored={scored}
+              correctAnswer={correct_answer}
             />))
         }
 
