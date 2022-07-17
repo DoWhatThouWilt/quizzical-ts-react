@@ -64,19 +64,20 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center">
-      <div className="mx-auto max-w-screen-md ">
+      <div className="p-6 rounded-xl mx-auto max-w-screen-md glass bg-opacity">
 
         {gameOver &&
-          <div className="text-center">
-            <h1 className="text-[2.75rem] text-slate-800 font-semibold tracking-wider">Quizzical</h1>
-            <p className="text-xl">Scramble your brain on trivia</p>
+          <div className="text-center text-white p-6">
+            <h1 className="text-[2.75rem] font-semibold tracking-wider drop-shadow-lg">Quizzical</h1>
+            <p className="text-xl font-medium drop-shadow-sm">Scramble your brain on trivia</p>
             <button
-              className="mt-10 text-xl bg-[#4D5B9E] text-white font-medium py-5 px-[4.5rem] rounded-3xl"
+              className="mt-10 text-xl bg-[#4D5B9E] text-white font-medium py-3 px-[4.5rem] shadow-xl rounded-3xl
+              hover:scale-110 transition-transform ease-in duration-100"
               onClick={startTrivia}>Start quiz</button>
           </div>
         }
 
-        {loading && <p>Loading Questions...</p>}
+        {loading && <p className="text-white">Loading Questions...</p>}
 
         {!loading && !gameOver &&
           questions.map(({ question, answers }, i) => (
@@ -94,15 +95,17 @@ export default function App() {
         {!loading && !gameOver && !scored &&
           <div className="w-full flex justify-center">
             <button
-              className="mt-10 text-lg bg-[#4D5B9E] text-white font-medium py-4 px-10 rounded-3xl"
+              className="mt-10 text-lg bg-[#4D5B9E] text-white font-medium py-3 px-10 shadow-xl rounded-3xl
+              hover:scale-110 transition-transform ease-in duration-100"
               onClick={scoreQuiz}>Check Answers</button>
           </div>}
 
         {scored && !gameOver &&
           <div className="mt-10 w-full flex justify-center items-center space-x-6">
-            <p className="text-xl font-semibold">You scored {score}/{TOTAL_QUESTIONS} correct answers</p>
+            <p className="text-xl text-white font-semibold drop-shadow-sm">You scored {score}/{TOTAL_QUESTIONS} correct answers</p>
             <button
-              className="text-lg bg-[#4D5B9E] text-white font-medium py-4 px-10 rounded-3xl"
+              className="text-lg bg-[#4D5B9E] text-white font-medium py-3 px-10 shadow-xl rounded-3xl
+              hover:scale-110 transition-transform ease-in duration-100"
               onClick={startTrivia}>Play Again</button>
           </div>}
 
