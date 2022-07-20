@@ -19,9 +19,9 @@ export default function QuestionCard(
     correctAnswer
   }: Props
 ) {
-  const selected = "bg-violet-200 border-transparent border-[#F5F7FB]"
-  const incorrect = "bg-red-200 text-slate-500 border-transparent border-[#F5F7FB]"
-  const correct = "bg-green-300 border-transparent border-[#F5F7FB]"
+  const selected = "bg-violet-200 border-transparent"
+  const incorrect = "bg-red-200 text-slate-500 border-transparent"
+  const correct = "bg-green-300 border-transparent"
   const scoredSelected = "text-slate-500 border-slate-300"
 
   function isSelected(selectedAnswer: string) {
@@ -38,9 +38,9 @@ export default function QuestionCard(
           answers.map(answer => (
             <button
               className={
-                `border border-indigo-900 rounded-lg py-1 px-5 text-sm
+                `border rounded-lg py-1 px-5 text-sm
                 hover:scale-105 transition-all ease-in duration-100
-                ${!scored && isSelected(answer) && selected}
+                ${!scored && (isSelected(answer) ? selected : "border-indigo-900")}
                 ${scored && (answer === correctAnswer ? correct :
                   isSelected(answer) ? incorrect :
                     scoredSelected)}
