@@ -19,9 +19,9 @@ export default function QuestionCard(
     correctAnswer
   }: Props
 ) {
-  const selected = "bg-violet-200 border-transparent"
-  const incorrect = "bg-red-200 text-slate-500 border-transparent"
-  const correct = "bg-green-300 border-transparent"
+  const selected = "bg-violet-200 border-transparent border-[#F5F7FB]"
+  const incorrect = "bg-red-200 text-slate-500 border-transparent border-[#F5F7FB]"
+  const correct = "bg-green-300 border-transparent border-[#F5F7FB]"
   const scoredSelected = "text-slate-500 border-slate-300"
 
   function isSelected(selectedAnswer: string) {
